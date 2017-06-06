@@ -1,5 +1,6 @@
 <?php
 
+<<<<<<< HEAD
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,3 +30,10 @@ Route::group(['prefix' => '/admin'], function () {
         Route::get('/', 'HomeController@admin');
     });
 });
+=======
+Route::get('/', function () {
+    return view('welcome');
+});
+Route::get('/upload', 'UploadController@uploadFiles');
+Route::post('/upload', 'UploadController@uploadSubmit');
+>>>>>>> origin/dev
