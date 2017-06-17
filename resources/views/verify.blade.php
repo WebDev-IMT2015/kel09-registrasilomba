@@ -23,7 +23,7 @@
                     <form class="form-horizontal" role="form" method="POST" action={{ url('verify') }}>
                         {{ csrf_field() }}
 
-                        <div class="form-group{{ session('error') ? ' has-error' : '' }}">
+                        <div class="form-group {{ session('error') ? ' has-error' : '' }}">
                             <label for="verification_code" class="col-md-4 control-label">Verification Code</label>
 
                             <div class="col-md-6">

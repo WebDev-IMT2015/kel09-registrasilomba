@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Auth;
 use Mail;
+use Hash;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -76,16 +77,50 @@ class HomeController extends Controller
         }
     }
 
-    public function storeProfile($id){
+    public function storeProfile(Request $request, $id){
         $user = User::find(Auth::user()->id);
-        if(! $user){
-            return redirect('/');
-        }else {
-            if(Auth::user()->id == $id){
-                return view('user.profile.edit')->with('user', $user);
-            }else{
-                return view('user.profile.edit')->with('user', $user)->with('');
+        if(Auth::user()->id == $id){
+            $user->name = $request->input('name');
+            if($user->confirmed == 0){
+                $user->email = $request->input('email');
             }
+            $user->alamat = $request->input('alamat');
+            if(strlen($request->input('phone_number')) < 10 || strlen($request->input('phone_number')) > 13){
+                return redirect('profile/'.$id.'/edit')->with('phone_number', 'wrong format');
+            }
+            $user->phone_number = $request->input('phone_number');
+            $user->save();
+            return redirect('profile/'.$id)->with('editProfile', 'success');
+        }else{
+            return redirect('profile/'.Auth::user()->id.'/edit');
+        }
+    }
+
+    public function changepass($id){
+        $user = User::find(Auth::user()->id);
+        if(Auth::user()->id == $id){
+            return view('user.profile.password')->with('user', $user);
+        }else{
+            return redirect('profile/'.Auth::user()->id.'/changepass');
+        }
+    }
+
+    public function savepass(Request $request, $id){
+        $user = User::find(Auth::user()->id);
+        if(Auth::user()->id == $id){
+            if(Hash::check($request->input('lastPassword'), $user->password)){
+                if($request->input('newPassword') == $request->input('retypePassword')){
+                    $user->password = bcrypt($request->input('newPassword'));
+                    $user->save();
+                    return redirect('profile/'.$id)->with('changePass', 'success');
+                }else{
+                    return redirect('profile/'.$id.'/changepass')->with('retype', 'true');
+                }
+            }else{
+                return redirect('profile/'.$id.'/changepass')->with('error', 'true');
+            }
+        }else{
+            return redirect('/');
         }
     }
 }

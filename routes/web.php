@@ -28,6 +28,10 @@ Route::group(['middleware' => 'auth'], function(){
 		Route::get('{id}/edit', 'HomeController@editProfile');
 
 		Route::post('{id}/edit/save', 'HomeController@storeProfile');
+
+		Route::get('{id}/changepass', 'HomeController@changepass');
+
+		Route::post('{id}/savepass', 'HomeController@savepass');
 	
 	});
 });

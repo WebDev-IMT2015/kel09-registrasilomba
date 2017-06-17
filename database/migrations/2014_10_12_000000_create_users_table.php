@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('alamat')->nullable();
-            $table->integer('phone_number')->nullable();
+            $table->string('phone_number')->nullable();
             $table->string('role');
             $table->boolean('confirmed')->default(0);
             $table->string('confirmation_code')->nullable();
