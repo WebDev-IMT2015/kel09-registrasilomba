@@ -17,7 +17,7 @@ class HomeController extends Controller
      */
 
     public function index(){
-        return Auth::check() ? view('home') : view('main');
+        return Auth::check() ? view('home')->with('user', Auth::user()) : view('main');
     }
 
     public function verify(){

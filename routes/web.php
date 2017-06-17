@@ -34,6 +34,14 @@ Route::group(['middleware' => 'auth'], function(){
 		Route::post('{id}/savepass', 'HomeController@savepass');
 	
 	});
+    
+    Route::group(['middleware' => 'admin'], function(){
+
+	    Route::group(['prefix' => 'add'], function(){
+	    	Route::get('event', 'CompetitionController@event');
+	    });
+	    
+	});
 });
 
 
