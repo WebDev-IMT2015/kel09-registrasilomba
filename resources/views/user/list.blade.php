@@ -26,7 +26,7 @@
 									<tr>
 										<td>{{ $user->id }}</td>
 										<td>{{ $user->name }}</td>
-										<td style="color:@if($user->confirmed == 1) green @else red @endif">{{ $user->email }}</td>
+										<td style="color:@if($user->confirmed == true) green @else red @endif">{{ $user->email }}</td>
 										<td>{{ $user->alamat }}</td>
 										<td>{{ $user->phone_number }}</td>
 									</tr>

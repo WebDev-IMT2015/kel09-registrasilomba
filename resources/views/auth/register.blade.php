@@ -52,7 +52,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('alamat') ? ' has-error' : '' }}">
+                        <div class="form-group{{ $errors->has('phone_number') ? ' has-error' : '' }}">
                             <label for="phone_number" class="col-md-4 control-label">Phone Number</label>
 
                             <div class="col-md-6">

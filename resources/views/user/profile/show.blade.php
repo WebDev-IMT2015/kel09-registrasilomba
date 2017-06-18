@@ -31,7 +31,7 @@
 									<td>Email</td>
 									<td>{{ $user->email }}</td>
 									<a href="/">
-										<td style="text-align: center;color: {{ $user->confirmed == 1 ? 'Green' : 'red' }}">@if($user->confirmed == 1) Verified @else Not Verified @endif</td>
+										<td class="text-center" style="color: {{ $user->confirmed == true ? 'Green' : 'red' }}">@if($user->confirmed == true) Verified @else Not Verified @endif</td>
 									</a>
 								</tr>
 								<tr>

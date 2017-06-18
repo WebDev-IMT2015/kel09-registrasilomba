@@ -6,6 +6,7 @@ use Auth;
 use Mail;
 use Hash;
 use App\User;
+use App\Competition;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -17,11 +18,21 @@ class HomeController extends Controller
      */
 
     public function index(){
-        return Auth::check() ? view('home')->with('user', Auth::user()) : view('main');
+        if(Auth::check()){
+            $allCompetition = Competition::paginate(10)->setPageName('competition');
+
+            if(Auth::user()->role == "admin"){
+                return view('home')->with('user', Auth::user())->with('allCompetition', $allCompetition);
+            }else if (Auth::user()->role == "user"){
+                return view('home');
+            }
+        }else{
+            return view('main');
+        }
     }
 
     public function verify(){
-        if(Auth::user()->confirmed == 0){
+        if(Auth::user()->confirmed == false){
             return view('verify');
         }else{
             return redirect('/');
@@ -40,7 +51,7 @@ class HomeController extends Controller
             return redirect('verify')->with('error', 'true');
         }
 
-        $user->confirmed = 1;
+        $user->confirmed = true;
         $user->confirmation_code = null;
         $user->save();
 
@@ -81,7 +92,7 @@ class HomeController extends Controller
         $user = User::find(Auth::user()->id);
         if(Auth::user()->id == $id){
             $user->name = $request->input('name');
-            if($user->confirmed == 0){
+            if($user->confirmed == false){
                 $user->email = $request->input('email');
             }
             $user->alamat = $request->input('alamat');

@@ -24,11 +24,11 @@
                             <label for="email" class="col-md-4 control-label">E-Mail Address</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ $user->email }}" @if($user->confirmed == 1) disabled @endif required>
+                                <input id="email" type="email" class="form-control" name="email" value="{{ $user->email }}" @if($user->confirmed == true) disabled @endif required>
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('alamat') ? ' has-error' : '' }}">
+                        <div class="form-group">
                             <label for="alamat" class="col-md-4 control-label">Alamat</label>
 
                             <div class="col-md-6">
@@ -36,7 +36,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('alamat') ? ' has-error' : '' }}">
+                        <div class="form-group @if(session('phone_number')) has-error @endif">
                             <label for="phone_number" class="col-md-4 control-label">Phone Number</label>
 
                             <div class="col-md-6">
@@ -48,7 +48,6 @@
 	                                </span>
 	                            @endif
                             </div>
-
                         </div>
 
 						<div class="form-group">

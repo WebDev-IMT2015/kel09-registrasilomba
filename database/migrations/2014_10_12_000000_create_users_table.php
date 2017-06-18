@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('alamat')->nullable();
             $table->string('phone_number')->nullable();
             $table->string('role');
-            $table->boolean('confirmed')->default(0);
+            $table->boolean('confirmed')->default(false);
             $table->string('confirmation_code')->nullable();
             $table->rememberToken();
             $table->timestamps();

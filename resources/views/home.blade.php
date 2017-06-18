@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
 
-			@if(Auth::user()->confirmed == 0)
+			@if(Auth::user()->confirmed == false)
 				<div class="alert alert-info">
 					Your Email Address is not <strong>Verified</strong>. Please Click <a href={{ url('verify') }}>Here</a> to Verify
 				</div>
@@ -22,34 +22,31 @@
                 <div class="panel-body">
                     @if($user->role == "admin")
                         <div class="col-md-12 text-center" style="margin-bottom: 1em;">
-                            <a href="{{ url('event/add') }}" class="btn btn-primary">Add New Event</a>
+                            <a href="{{ url('competition/add') }}" class="btn btn-primary">Add New Competition</a>
                         </div>
-                        <div class="col-md-10 col-md-offset-1 table-responsive">
+                        <div class="col-md-12 table-responsive">
                             <table class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <th>No</th>
                                         <th>Nama Lomba</th>
-                                        <th>fgh</th>
-                                        <th style="width: 35%;">Action</th>
+                                        <th>Jumlah Karya</th>
+                                        <th>Jumlah Pendaftar</th>
+                                        <th style="width: 30%;">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @if(isset($allCompetition))
                                         @foreach ($allCompetition as $competition)
                                             <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
+                                                <td>{{ $competition->name }}</td>
+                                                <td class="text-center">{{ $competition->attachment_total }}</td>
+                                                <td class="text-center">@if(isset($registrant)) {{ $registrant->count() }} @else 0 @endif</td>
                                                 <td>
-                                                    <a href="">
+                                                    <a href="{{ url('competition/'.$competition->id.'/manage') }}">
                                                         <span class="glyphicon glyphicon-check" aria-hidden="true"></span> Manage
                                                     </a>
-                                                    <a href="">
-                                                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit
-                                                    </a>
-                                                    <a href="">
-                                                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete
+                                                    <a href="{{ url('competition/'.$competition->id.'/list') }}">
+                                                        <span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span> View List
                                                     </a>
                                                 </td>
                                             </tr>
@@ -70,8 +67,8 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if(isset($competitionStatus))
-                                        @foreach($competitionStatus as $status)
+                                    @if(isset($allCompetition))
+                                        @foreach($allCompetition as $competition)
                                             <tr>
                                                 <td></td>
                                                 <td></td>

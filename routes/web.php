@@ -37,8 +37,16 @@ Route::group(['middleware' => 'auth'], function(){
     
     Route::group(['middleware' => 'admin'], function(){
 
-	    Route::group(['prefix' => 'event'], function(){
-	    	Route::get('add', 'CompetitionController@event');
+	    Route::group(['prefix' => 'competition'], function(){
+
+	    	Route::get('add', 'CompetitionController@competition');
+
+	    	Route::post('save', 'CompetitionController@saveCompetition');
+
+	    	Route::get('{id}/manage', 'CompetitionController@manage');
+
+	    	Route::get('{id}/list', 'CompetitionController@list');
+
 	    });
 	    
 	    Route::get('user/list', 'UserController@userList');

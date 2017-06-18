@@ -34,7 +34,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group @if (session('retype')) has-error @endif">
                             <label for="newPassword" class="col-md-4 control-label">Retype Password</label>
 
                             <div class="col-md-6">
