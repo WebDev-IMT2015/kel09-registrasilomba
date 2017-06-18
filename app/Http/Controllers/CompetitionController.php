@@ -47,4 +47,8 @@ class CompetitionController extends Controller
 			return redirect('/');
 		}
     }
+
+    public function join($id){
+        
+    }
 }

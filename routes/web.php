@@ -55,7 +55,11 @@ Route::group(['middleware' => 'auth'], function(){
     
     Route::group(['middleware' => 'user'], function(){
 	
+    	Route::group(['prefix' => 'competition'], function(){
 
+	    	Route::get('{id}/join', 'CompetitionController@join');
+
+	    });
 
 	});
 

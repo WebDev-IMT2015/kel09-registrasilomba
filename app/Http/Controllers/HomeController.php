@@ -22,9 +22,9 @@ class HomeController extends Controller
             $allCompetition = Competition::paginate(10)->setPageName('competition');
 
             if(Auth::user()->role == "admin"){
-                return view('home')->with('user', Auth::user())->with('allCompetition', $allCompetition);
+                return view('home')->with('allCompetition', $allCompetition);
             }else if (Auth::user()->role == "user"){
-                return view('home');
+                return view('home')->with('allCompetition', $allCompetition);
             }
         }else{
             return view('main');
