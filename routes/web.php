@@ -44,6 +44,13 @@ Route::group(['middleware' => 'auth'], function(){
 	    Route::get('user/list', 'UserController@userList');
 
 	});
+    
+    Route::group(['middleware' => 'user'], function(){
+	
+		
+
+	});
+
 });
 
 
