@@ -21,7 +21,7 @@
 
                 <div class="panel-body">
                     @if(Auth::user()->role == "admin")
-                        <div class="col-md-12 text-center" style="margin-bottom: 1em;">
+                        <div class="col-md-12" style="margin-bottom: 1em;">
                             <a href="{{ url('competition/add') }}" class="btn btn-primary">Add New Competition</a>
                         </div>
                         <div class="col-md-12 table-responsive">
@@ -31,7 +31,7 @@
                                         <th>Nama Lomba</th>
                                         <th>Jumlah Karya</th>
                                         <th>Jumlah Pendaftar</th>
-                                        <th style="width: 30%;">Action</th>
+                                        <th style="width: 35%;">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
