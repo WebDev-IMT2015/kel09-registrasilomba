@@ -41,6 +41,8 @@ Route::group(['middleware' => 'auth'], function(){
 	    	Route::get('event', 'CompetitionController@event');
 	    });
 	    
+	    Route::get('user/list', 'UserController@userList');
+
 	});
 });
 

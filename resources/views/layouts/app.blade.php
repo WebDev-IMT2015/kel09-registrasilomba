@@ -62,6 +62,9 @@
 
                                 <ul class="dropdown-menu" role="menu">
                                     <li>
+                                        @if(Auth::user()->role == "admin")
+                                            <a href="{{ url('user/list') }}">User List</a>
+                                        @endif
                                         <a href="{{ url('profile/'.Auth::user()->id) }}">Profile</a>
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
