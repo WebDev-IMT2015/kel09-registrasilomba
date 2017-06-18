@@ -35,22 +35,26 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>
-                                            <a href="">
-                                                <span class="glyphicon glyphicon-check" aria-hidden="true"></span> Manage
-                                            </a>
-                                            <a href="">
-                                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit
-                                            </a>
-                                            <a href="">
-                                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete
-                                            </a>
-                                        </td>
-                                    </tr>
+                                    @if(isset($allCompetition))
+                                        @foreach ($allCompetition as $competition)
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td>
+                                                    <a href="">
+                                                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span> Manage
+                                                    </a>
+                                                    <a href="">
+                                                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit
+                                                    </a>
+                                                    <a href="">
+                                                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @endif
                                 </tbody>
                             </table>
                         </div>
