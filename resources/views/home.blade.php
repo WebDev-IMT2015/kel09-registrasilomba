@@ -17,7 +17,7 @@
             @endif
 
             <div class="panel panel-default">
-                <div class="panel-heading"> {{ Auth::user()->role == "admin" ? "Event Manager" : "User Panel"}} </div>
+                <div class="panel-heading"> {{ Auth::user()->role == "admin" ? "Competition Manager" : "Competition List"}} </div>
 
                 <div class="panel-body">
                     @if($user->role == "admin")
@@ -59,10 +59,64 @@
                             </table>
                         </div>
                     @elseif($user->role == "user")
-
+                        <div class="col-md-10 col-md-offset-1 table-responsive">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Nama Lomba</th>
+                                        <th>Stuff</th>
+                                        <th>Stuff</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if(isset($competitionStatus))
+                                        @foreach($competitionStatus as $status)
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        @endforeach
+                                    @endif
+                                </tbody>
+                            </table>
+                        </div>
                     @endif
                 </div>
             </div>
+            @if($user->role == "user")
+                <div class="panel panel-default">
+                    <div class="panel-heading"> Competition Status </div>
+                    <div class="panel-body">
+                        <div class="col-md-10 col-md-offset-1 table-responsive">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Nama Lomba</th>
+                                        <th>Stuff</th>
+                                        <th>Stuff</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if(isset($competitionStatus))
+                                        @foreach($competitionStatus as $status)
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        @endforeach
+                                    @endif
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>  
+                </div>
+            @endif
         </div>
     </div>
 </div>

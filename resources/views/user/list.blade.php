@@ -14,7 +14,7 @@
 							
 							<thead>
 								<tr>
-									<th>No</th>
+									<th>Id</th>
 									<th>Nama</th>
 									<th>Email</th>
 									<th>Alamat</th>
