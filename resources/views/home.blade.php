@@ -54,6 +54,9 @@
                                     @endif
                                 </tbody>
                             </table>
+                            <div class="text-center">
+                                {{ $allCompetition->render() }}
+                            </div>  
                         </div>
                     @elseif($user->role == "user")
                         <div class="col-md-10 col-md-offset-1 table-responsive">
@@ -79,6 +82,9 @@
                                     @endif
                                 </tbody>
                             </table>
+                            <div class="text-center">
+                                {{ $allCompetition->render() }}
+                            </div>
                         </div>
                     @endif
                 </div>
