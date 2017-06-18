@@ -37,8 +37,8 @@ Route::group(['middleware' => 'auth'], function(){
     
     Route::group(['middleware' => 'admin'], function(){
 
-	    Route::group(['prefix' => 'add'], function(){
-	    	Route::get('event', 'CompetitionController@event');
+	    Route::group(['prefix' => 'event'], function(){
+	    	Route::get('add', 'CompetitionController@event');
 	    });
 	    
 	    Route::get('user/list', 'UserController@userList');
@@ -47,7 +47,7 @@ Route::group(['middleware' => 'auth'], function(){
     
     Route::group(['middleware' => 'user'], function(){
 	
-		
+
 
 	});
 

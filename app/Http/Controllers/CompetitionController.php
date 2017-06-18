@@ -8,6 +8,6 @@ class CompetitionController extends Controller
 {
 	
     public function event(){
-    	return view('add.event');	
+    	return view('event.add');
     }
 }

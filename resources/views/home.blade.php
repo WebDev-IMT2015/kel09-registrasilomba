@@ -22,7 +22,7 @@
                 <div class="panel-body">
                     @if($user->role == "admin")
                         <div class="col-md-12 text-center" style="margin-bottom: 1em;">
-                            <a href="{{ url('add/event') }}" class="btn btn-primary">Add New Event</a>
+                            <a href="{{ url('event/add') }}" class="btn btn-primary">Add New Event</a>
                         </div>
                         <div class="col-md-10 col-md-offset-1 table-responsive">
                             <table class="table table-bordered table-hover">
