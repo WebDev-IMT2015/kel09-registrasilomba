@@ -14,9 +14,9 @@ class CreateUserJoinEventTable extends Migration
     public function up()
     {
         Schema::create('participants', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('user_id');
-            $table->integer('competition_id');
+            $table->integer('id')->unsigned();
+            $table->integer('user_id')->unsigned();
+            $table->integer('competition_id')->unsigned();
             $table->string('ktp_picpath');
             $table->boolean('ktp_confirmed')->default(false);
             $table->string('pdf_picpath');
@@ -24,7 +24,7 @@ class CreateUserJoinEventTable extends Migration
             $table->integer('status')->default(0);
             $table->timestamps();
 
-            $table->primary(['user_id', 'competition_id']);
+            $table->primary(['id', 'user_id', 'competition_id']);
 
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('competition_id')->references('id')->on('competitions');

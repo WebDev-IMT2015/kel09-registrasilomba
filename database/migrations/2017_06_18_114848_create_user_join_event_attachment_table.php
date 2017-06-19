@@ -14,8 +14,7 @@ class CreateUserJoinEventAttachmentTable extends Migration
     public function up()
     {
         Schema::create('attachments', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('participants_id');
+            $table->integer('participants_id')->unsigned();
             $table->integer('attachment_no');
             $table->string('attachment_path');
             $table->boolean('attachment_confirmed')->default(false);
