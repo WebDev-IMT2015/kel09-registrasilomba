@@ -40,7 +40,11 @@ class CompetitionController extends Controller
 		}
     }
 
-    public function join($id){
-        
+    public function join(Request $request){
+        $this->validate($request,[
+        'ktp' => 'required|image',
+        'pdf' => 'required|file|mimes:application/pdf, application/x-pdf,application/acrobat, applications/vnd.pdf, text/pdf, text/x-pdf|max:10000',
+        'hasil_karya.*' => 'required|image']);
+        return view('competition.join');
     }
 }
