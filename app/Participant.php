@@ -11,19 +11,11 @@ class Participant extends Model
     ];
 
     public function user(){
-<<<<<<< HEAD
     	return $this->belongsTo('App\User', 'user_id', 'id');
     }
 
     public function competition(){
     	return $this->belongsTo('App\Competition', 'competition_id', 'id');
-=======
-    	return $this->belongTo('App\User', 'user_id', 'id');
-    }
-
-    public function competition(){
-    	return $this->belongTo('App\Competition', 'competition_id', 'id');
->>>>>>> refs/remotes/origin/master
     }
 
     public function attachment(){
