@@ -40,7 +40,7 @@ class CompetitionController extends Controller
 		}
     }
 
-    public function list($id){
+    public function userList($id){
     	if(Competition::find($id)){
 			return view('competition.list')->with('competition', Competition::find($id));
 		}else{

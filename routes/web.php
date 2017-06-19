@@ -45,7 +45,7 @@ Route::group(['middleware' => 'auth'], function(){
 
 	    	Route::get('{id}/manage', 'CompetitionController@manage');
 
-	    	Route::get('{id}/list', 'CompetitionController@list');
+	    	Route::get('{id}/list', 'CompetitionController@userList');
 
 	    });
 	    
