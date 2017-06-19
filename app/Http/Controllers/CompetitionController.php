@@ -213,7 +213,7 @@ class CompetitionController extends Controller
             $participant->save();
 
             $attachment = Attachment::where('participants_id', $id);
-            foreach ($attachment as $attach) {
+            foreach ($attachment->get() as $attach) {
                 $attach->attachment_confirmed = true;
                 $attach->save();
             }
