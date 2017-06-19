@@ -29,6 +29,8 @@ class CreateUserJoinEventTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('competition_id')->references('id')->on('competitions');
         });
+
+         DB::statement('ALTER TABLE participants MODIFY COLUMN id int(10) unsigned auto_increment');
     }
 
     /**

@@ -28,7 +28,8 @@ class CompetitionController extends Controller
 
 	public function manage($id){
 		if(Competition::find($id)){
-			return view('competition.manage')->with('competition', Competition::find($id));
+            $participants = Participant::where('competition_id', $id)->paginate(5);
+			return view('competition.manage')->with('competition', Competition::find($id))->with('participants', $participants)->with('users', User::all());
 		}else{
 			return redirect('/');
 		}
@@ -43,24 +44,19 @@ class CompetitionController extends Controller
 		}
     }
 
-<<<<<<< HEAD
-    public function join($id){
-
-    }
-
     public function viewAttachment($id){
         if(Participant::find($id)){
             return view('competition.participant.view')->with('participant',Participant::find($id));
         }else{
             return redirect('/');
         }
-=======
+    }
+
     public function join(Request $request){
         $this->validate($request,[
         'ktp' => 'required|image',
         'pdf' => 'required|file|mimes:application/pdf, application/x-pdf,application/acrobat, applications/vnd.pdf, text/pdf, text/x-pdf|max:10000',
         'hasil_karya.*' => 'required|image']);
         return view('competition.join');
->>>>>>> origin/dev
     }
 }
