@@ -34,7 +34,7 @@
                                             <td>{{ $user->phone_number }}</td>
                                             <td>
                                                 @if($participant->status == 0)
-                                                    <span style="color:black">Please Wait</span>
+                                                    <span style="color:black">Validating</span>
                                                 @elseif($participant->status == 1)
                                                     <span style="color:red">Need Revision</span>
                                                 @elseif($participant->status == 2)

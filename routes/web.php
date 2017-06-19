@@ -49,7 +49,11 @@ Route::group(['middleware' => 'auth'], function(){
 
 	    });
 
-	    Route::get('attachment/{id}/view', 'CompetitionController@viewAttachment');
+	    Route::group(['prefix' => 'attachment'], function(){
+
+
+		    Route::get('{id}/validate', 'CompetitionController@validateAttachment');
+		});
 	    
 	    Route::get('user/list', 'UserController@userList');
 
@@ -65,7 +69,25 @@ Route::group(['middleware' => 'auth'], function(){
 
 	    });
 
+    	Route::group(['prefix' => 'attachment'], function(){
+
+			Route::get('{id}/revision', 'CompetitionController@revision');
+
+	    });
+
 	});
+
+    Route::group(['prefix' => 'attachment'], function(){
+
+		Route::get('{id}/view', 'CompetitionController@viewAttachment');
+			
+		Route::get('{id}/view/ktp', 'CompetitionController@viewKtp');
+
+		Route::get('{id}/view/surat', 'CompetitionController@viewPdf');
+
+		Route::get('{id}/view/karya/{no}', 'CompetitionController@viewKarya');
+    
+    });
 
 });
 

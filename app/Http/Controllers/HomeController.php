@@ -27,7 +27,7 @@ class HomeController extends Controller
                 return view('home')->with('allCompetition', $allCompetition)->with('participant', Participant::all());
             }else if (Auth::user()->role == "user"){
                 $participate = Participant::where('user_id', Auth::user()->id)->paginate(5)->setPageName('participate');
-                return view('home')->with('allCompetition', $allCompetition)->with('participate', $participate);
+                return view('home')->with('allCompetition', $allCompetition)->with('participate', $participate)->with('participant', Participant::all());
             }
         }else{
             return view('main');

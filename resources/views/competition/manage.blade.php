@@ -33,7 +33,7 @@
                                                 <td>{{ $user->alamat }}</td>
                                                 <td>{{ $user->phone_number }}</td>
                                                 <td>
-                                                    <a href="{{ url('attachment/'.$participant->id.'/view') }}">
+                                                    <a href="{{ url('attachment/'.$participant->id.'/validate') }}">
                                                         <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Validate Attachment
                                                     </a>
                                                 </td>

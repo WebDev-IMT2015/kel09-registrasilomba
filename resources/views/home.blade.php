@@ -75,9 +75,13 @@
                                                 <td>{{ $competition->name }}</td>
                                                 <td class="text-center">{{ $competition->attachment_total }}</td>
                                                 <td>
-                                                    <a href="{{ url('competition/'.$competition->id.'/join') }}">
-                                                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Join
-                                                    </a>
+                                                    @if($participant->where('user_id', Auth::user()->id)->where('competition_id', $competition->id)->count() > 0)
+                                                        Registered
+                                                    @else
+                                                        <a href="{{ url('competition/'.$competition->id.'/join') }}">
+                                                            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Join
+                                                        </a>
+                                                    @endif
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -94,7 +98,7 @@
                     @endif
                 </div>
             </div>
-            @if(Auth::user()->role == "user" && isset($competitionStatus))
+            @if(Auth::user()->role == "user" && isset($participate))
                 <div class="panel panel-default">
                     <div class="panel-heading"> Competition Status </div>
                     <div class="panel-body">
@@ -105,15 +109,32 @@
                                         <th>Nama Lomba</th>
                                         <th>Jumlah Karya</th>
                                         <th>Status</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($participate as $competition)
-                                        <tr>
-                                            <td>{{ $competition->name }}</td>
-                                            <td class="text-center">{{ $competition->attachment_total }}</td>
-                                            <td></td>
-                                        </tr>
+                                    @foreach($participate as $status)
+                                        @if($competition = $allCompetition->where('id', $status->competition_id)->first())
+                                            <tr>
+                                                <td>{{ $competition->name }}</td>
+                                                <td class="text-center">{{ $competition->attachment_total }}</td>
+                                                <td>
+                                                    @if($status->status == 0)
+                                                        <span style="color:black">Validating</span>
+                                                    @elseif($status->status == 1)
+                                                        <a href=""><span style="color:red">Need Revision</span></a>
+                                                    @elseif($status->status == 2)
+                                                        <span style="color:green">Accepted</span>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    <a href="{{ url('attachment/'.$status->id.'/view') }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> View </a>
+                                                    @if($status->status == 1)
+                                                        <a href="{{ url('attachment/'.$status->id.'/revision') }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Make Revision </a>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @endif
                                     @endforeach
                                 </tbody>
                             </table>

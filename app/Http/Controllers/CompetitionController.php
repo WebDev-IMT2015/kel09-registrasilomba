@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use App\User;
 use App\Competition;
 use App\Participant;
+use App\Attachment;
+use Response;
 use Illuminate\Http\Request;
 
 class CompetitionController extends Controller
@@ -44,16 +47,17 @@ class CompetitionController extends Controller
 		}
     }
 
-    public function viewAttachment($id){
+    public function validateAttachment($id){
         if(Participant::find($id)){
-            return view('competition.participant.view')->with('participant',Participant::find($id));
+            return view('competition.participant.validate')->with('participant', Participant::find($id));
         }else{
             return redirect('/');
         }
     }
 
     public function join(Request $request, $id){
-        if(Competition::find($id)){
+        $participate = Participant::where('user_id', Auth::user()->id)->where('competition_id', $id)->count() > 0;
+        if(Competition::find($id) && $participate == false){
             return view('competition.join')->with('competition', Competition::find($id));
         }else{
             return redirect('/');
@@ -62,21 +66,80 @@ class CompetitionController extends Controller
 
     public function upload(Request $request, $id){
         $this->validate($request,[
-        'ktp' => 'required|image',
-        'pdf' => 'required|file|mimes:pdf|max:10000',
-        'hasil_karya.*' => 'required|image']);
+        'ktp' => 'required|image|max:10000',
+        'surat' => 'required|file|mimes:pdf|max:10000',
+        'hasil_karya.*' => 'required|image|max:10000']);
 
-        // $participant = new Participant;
-        // $participant->user_id = Auth::user()->id;
-        // $participant->competition_id = $id;
-        // $participant->
-        // $attachment = new Attachment;
-        // $attachment->participants_id = $request->input('participants_id');
-        // $attachment->attachment_no = $request->input('attachment_no');
-        // $attachment->attachment_path = $request->input('attachment_path');
-        // $attachment->attachment_no = $request->input('attachment_no');
+        $participant = new Participant;
+        $participant->user_id = Auth::user()->id;
+        $participant->competition_id = $id;
+        $ktp = $request->file('ktp')->store('ktp');
+        $pdf = $request->file('surat')->store('pdf');
+        $participant->ktp_picpath = $ktp;
+        $participant->pdf_picpath = $pdf;
+        $participant->save();
 
+        $hasil_karya = $request->file('hasil_karya');
+        for ($i = 1; $i <= count($hasil_karya); $i++) {
+            $attachment = new Attachment;
+            $attachment->participants_id = $participant->id;
+            $attachment->attachment_no = $i;
+            $attachment->attachment_path = $hasil_karya[$i]->store('hasil_karya');
+            $attachment->save();
+        }
         return redirect('/');
-        // return $request;
+    }
+
+    public function revision($id){
+        if(Participant::find($id)->user_id == Auth::user()->id){
+            $participant = Participant::find($id);
+            $attachment = Attachment::where('participants_id', $id);
+            return view('competition.participant.revision')->with('participant', $participant)->with('attachment', $attachment);
+        }else{
+            return redirect('/');
+        }
+    }
+
+    public function view($id){
+        if(Participant::find($id)->user_id == Auth::user()->id){
+            $participant = Participant::find($id);
+            $attachment = Attachment::where('participants_id', $id);
+            return view('competition.participant.view')->with('participant', $participant)->with('attachment', $attachment);
+        }else{
+            return redirect('/');
+        }
+    }
+
+
+    public function viewAttachment($id){
+        if(Participant::find($id)){
+            $participant = Participant::find($id);
+            return view('competition.participant.view')->with('participant', $participant)->with('attachment', Attachment::where('participants_id', $participant->id));
+        }else{
+            return redirect('/');
+        }
+    }
+
+    public function viewKtp($id){
+        $filename = Participant::find($id)->ktp_picpath;
+        $path = storage_path('app\\'.str_replace('/','\\',Participant::find($id)->ktp_picpath));
+
+        return Response::download($path);
+    }
+
+    public function viewPdf($id){
+        $filename = Participant::find($id)->pdf_picpath;
+        $path = storage_path('app\\'.str_replace('/','\\',Participant::find($id)->pdf_picpath));
+
+        return Response::download($path);
+    }
+
+    public function viewKarya($id, $no){
+        $karya = Attachment::all();
+        $karya = $karya->where('participants_id',$id)->where('attachment_no', $no)->first();
+        $filename = $karya->attachment_path;
+        $path = storage_path('app\\'.str_replace('/','\\', $karya->attachment_path));
+
+        return Response::download($path);
     }
 }
