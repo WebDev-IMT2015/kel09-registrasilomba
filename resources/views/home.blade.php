@@ -98,7 +98,7 @@
                     @endif
                 </div>
             </div>
-            @if(Auth::user()->role == "user" && isset($participate))
+            @if(Auth::user()->role == "user" && isset($participate) && $participate->count() > 0)
                 <div class="panel panel-default">
                     <div class="panel-heading"> Competition Status </div>
                     <div class="panel-body">
