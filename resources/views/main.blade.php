@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Welcome</title>
+	<title>Welcome to Congress</title>
 	<link rel="stylesheet" type="text/css" href={{ asset('css/bootstrap.css') }}>
 	<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
 	<style>
