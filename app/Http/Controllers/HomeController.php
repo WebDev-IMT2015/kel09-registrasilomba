@@ -7,6 +7,8 @@ use Mail;
 use Hash;
 use App\User;
 use App\Competition;
+use App\Participant;
+use App\Attachment;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -19,12 +21,13 @@ class HomeController extends Controller
 
     public function index(){
         if(Auth::check()){
-            $allCompetition = Competition::paginate(10)->setPageName('competition');
+            $allCompetition = Competition::paginate(5)->setPageName('competition');
 
             if(Auth::user()->role == "admin"){
-                return view('home')->with('allCompetition', $allCompetition);
+                return view('home')->with('allCompetition', $allCompetition)->with('participant', Participant::all());
             }else if (Auth::user()->role == "user"){
-                return view('home')->with('allCompetition', $allCompetition);
+                $participate = Participant::where('user_id', Auth::user()->id)->paginate(5)->setPageName('participate');
+                return view('home')->with('allCompetition', $allCompetition)->with('participate', $participate);
             }
         }else{
             return view('main');

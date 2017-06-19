@@ -40,7 +40,7 @@
                                             <tr>
                                                 <td>{{ $competition->name }}</td>
                                                 <td class="text-center">{{ $competition->attachment_total }}</td>
-                                                <td class="text-center">@if(isset($registrant)) {{ $registrant->count() }} @else 0 @endif</td>
+                                                <td class="text-center">{{ $participant->where('competition_id', $competition->id)->count() }} </td>
                                                 <td>
                                                     <a href="{{ url('competition/'.$competition->id.'/manage') }}">
                                                         <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Manage
@@ -56,7 +56,7 @@
                             </table>
                             <div class="text-center">
                                 {{ $allCompetition->render() }}
-                            </div>  
+                            </div>
                         </div>
                     @elseif(Auth::user()->role == "user")
                         <div class="col-md-12 table-responsive">
@@ -108,7 +108,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($competitionStatus as $competition)
+                                    @foreach($participate as $competition)
                                         <tr>
                                             <td>{{ $competition->name }}</td>
                                             <td class="text-center">{{ $competition->attachment_total }}</td>
@@ -118,7 +118,7 @@
                                 </tbody>
                             </table>
                             <div class="text-center">
-                                {{ $competitionStatus->render() }}
+                                {{ $participate->render() }}
                             </div>
                         </div>
                     </div>  
