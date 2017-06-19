@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\Competition;
+use App\Participant;
 use Illuminate\Http\Request;
 
 class CompetitionController extends Controller
@@ -34,13 +36,22 @@ class CompetitionController extends Controller
 
     public function userList($id){
     	if(Competition::find($id)){
-			return view('competition.list')->with('competition', Competition::find($id));
+			$participants = Participant::where('competition_id', $id)->paginate(5);
+            return view('competition.list')->with('competition', Competition::find($id))->with('participants', $participants)->with('users', User::all());
 		}else{
 			return redirect('/');
 		}
     }
 
     public function join($id){
-        
+
+    }
+
+    public function viewAttachment($id){
+        if(Participant::find($id)){
+            return view('competition.participant.view')->with('participant',Participant::find($id));
+        }else{
+            return redirect('/');
+        }
     }
 }
