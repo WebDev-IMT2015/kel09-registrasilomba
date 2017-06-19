@@ -26,4 +26,8 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token', 'confirmation_code'
     ];
+
+    public function participate(){
+        return $this->hasMany('App\Participant', 'user_id', 'id');
+    }
 }
