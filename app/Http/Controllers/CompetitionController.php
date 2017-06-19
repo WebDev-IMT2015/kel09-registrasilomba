@@ -49,7 +49,13 @@ class CompetitionController extends Controller
 
     public function validateAttachment($id){
         if(Participant::find($id)){
-            return view('competition.participant.validate')->with('participant', Participant::find($id));
+            $participant = Participant::find($id);
+            if($participant->status != 2){
+                $attachment = Attachment::where('participants_id', $id);
+                return view('competition.participant.validate')->with('participant', $participant)->with('attachment', $attachment);
+            }else{
+                return redirect('/');
+            }
         }else{
             return redirect('/');
         }
@@ -141,5 +147,70 @@ class CompetitionController extends Controller
         $path = storage_path('app\\'.str_replace('/','\\', $karya->attachment_path));
 
         return Response::download($path);
+    }
+
+    public function validating($id, Request $request){
+        if(Participant::find($id)){
+            $participant = Participant::find($id);
+            if($participant->ktp_confirmed == false){
+                if($request->has('ktp')){
+                    $participant->ktp_confirmed = true;
+                }
+            }
+            if($participant->pdf_confirmed == false){
+                if($request->has('pdf')){
+                    $participant->pdf_confirmed = true;
+                }
+            }
+
+            $participant->save();
+            $attachment = Attachment::where('participants_id', $id);
+            foreach ($attachment->get() as $attach) {
+                if($request->has('hasil_karya'.$attach->attachment_no)){
+                    $attach->attachment_confirmed = true;
+                    $attach->save();
+                }
+            }
+
+            $accepted = true;
+
+            if($participant->ktp_confirmed == false){
+                $accepted = false;
+            }
+            if($participant->pdf_confirmed == false){
+                $accepted = false;
+            }
+            foreach ($attachment as $attach) {
+                if($attach->attachment_confirmed == false){
+                    $acepted = false;
+                }
+            }
+
+            if($accepted == false){
+                $participant->status = 1;
+                return $request;
+            }else{
+                $participant->status = 2;
+            }
+            $participant->save();
+            return redirect('attachment/'.$id.'/validate');
+        }
+    }
+
+    public function accept($id){
+        if(Participant::find($id)){
+            $participant = Participant::find($id);
+            $participant->ktp_confirmed = true;
+            $participant->pdf_confirmed = true;
+            $participant->status = 2;
+            $participant->save();
+
+            $attachment = Attachment::where('participants_id', $id);
+            foreach ($attachment as $attach) {
+                $attach->attachment_confirmed = true;
+                $attach->save();
+            }
+        }
+        return redirect('/');
     }
 }

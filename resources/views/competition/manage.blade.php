@@ -24,7 +24,7 @@
                             </thead>
                             <tbody>
                                 @foreach($participants as $participant)
-                                    @if($participant->status != 2)
+                                    @if($participant->status == 0)
                                         @if($user = $users->find($participant->user_id))
                                             <tr>
                                                 <td>{{ $user->id }}</td>

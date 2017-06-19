@@ -51,8 +51,12 @@ Route::group(['middleware' => 'auth'], function(){
 
 	    Route::group(['prefix' => 'attachment'], function(){
 
-
 		    Route::get('{id}/validate', 'CompetitionController@validateAttachment');
+
+		    Route::post('{id}/validate', 'CompetitionController@validating');
+
+		    Route::post('{id}/accept', 'CompetitionController@accept');
+
 		});
 	    
 	    Route::get('user/list', 'UserController@userList');
