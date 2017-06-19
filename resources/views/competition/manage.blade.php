@@ -24,7 +24,7 @@
                             </thead>
                             <tbody>
                                 @foreach($participants as $participant)
-                                    @if($participant->status != 3)
+                                    @if($participant->status != 2)
                                         @if($user = $users->find($participant->user_id))
                                             <tr>
                                                 <td>{{ $user->id }}</td>
@@ -34,7 +34,7 @@
                                                 <td>{{ $user->phone_number }}</td>
                                                 <td>
                                                     <a href="{{ url('attachment/'.$participant->id.'/view') }}">
-                                                        <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span> Manage Attachment
+                                                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Validate Attachment
                                                     </a>
                                                 </td>
                                             </tr>

@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-md-10 col-md-offset-1">
 
             <div class="panel panel-default">
                 <div class="panel-heading"> List Registrant of {{ $competition->name }} </div>
@@ -19,6 +19,7 @@
                                     <th>Email</th>
                                     <th>Alamat</th>
                                     <th>Phone Number</th>
+                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -32,8 +33,17 @@
                                             <td>{{ $user->alamat }}</td>
                                             <td>{{ $user->phone_number }}</td>
                                             <td>
+                                                @if($participant->status == 0)
+                                                    <span style="color:black">Please Wait</span>
+                                                @elseif($participant->status == 1)
+                                                    <span style="color:red">Need Revision</span>
+                                                @elseif($participant->status == 2)
+                                                    <span style="color:green">Accepted</span>
+                                                @endif
+                                            </td>
+                                            <td>
                                                 <a href="{{ url('attachment/'.$participant->id.'/view') }}">
-                                                    <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span> View Attachment
+                                                    <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> View Attachment
                                                 </a>
                                             </td>
                                         </tr>
