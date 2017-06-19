@@ -48,6 +48,8 @@ Route::group(['middleware' => 'auth'], function(){
 	    	Route::get('{id}/list', 'CompetitionController@userList');
 
 	    });
+
+	    Route::get('attachment/{id}/view', 'CompetitionController@viewAttachment');
 	    
 	    Route::get('user/list', 'UserController@userList');
 

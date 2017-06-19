@@ -19,22 +19,32 @@
                                     <th>Email</th>
                                     <th>Alamat</th>
                                     <th>Phone Number</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {{-- @foreach($users as $user)
-                                    <tr>
-                                        <td>{{ $user->id }}</td>
-                                        <td>{{ $user->name }}</td>
-                                        <td style="color:@if($user->confirmed == true) green @else red @endif">{{ $user->email }}</td>
-                                        <td>{{ $user->alamat }}</td>
-                                        <td>{{ $user->phone_number }}</td>
-                                    </tr>
-                                @endforeach --}}
+                                @foreach($participants as $participant)
+                                    @if($participant->status != 3)
+                                        @if($user = $users->find($participant->user_id))
+                                            <tr>
+                                                <td>{{ $user->id }}</td>
+                                                <td>{{ $user->name }}</td>
+                                                <td style="color:@if($user->confirmed == true) green @else red @endif">{{ $user->email }}</td>
+                                                <td>{{ $user->alamat }}</td>
+                                                <td>{{ $user->phone_number }}</td>
+                                                <td>
+                                                    <a href="{{ url('attachment/'.$participant->id.'/view') }}">
+                                                        <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span> Manage Attachment
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        @endif
+                                    @endif
+                                @endforeach
                             </tbody>
                         </table>
                         <div class="text-center">
-                            {{-- {{ $users->render() }} --}}
+                            {{ $participants->render() }}
                         </div>
                     </div>
                 </div>
