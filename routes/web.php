@@ -77,6 +77,8 @@ Route::group(['middleware' => 'auth'], function(){
 
 			Route::get('{id}/revision', 'CompetitionController@revision');
 
+			Route::post('{id}/revision', 'CompetitionController@revise');
+
 	    });
 
 	});

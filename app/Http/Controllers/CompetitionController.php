@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use Mail;
 use App\User;
 use App\Competition;
 use App\Participant;
@@ -188,12 +189,18 @@ class CompetitionController extends Controller
 
             if($accepted == false){
                 $participant->status = 1;
-                return $request;
+                $user = User::find($participant->user_id);
+
+                Mail::send('user.email.revision', ['user' => User::find($participant->user_id), 'competition' => Competition::find($participant->competition_id), 'participant' => $participant], function($message) use ($user) {
+                    $message->to($user->email, $user->name)->subject('Revise your Competition Requirement');
+                });
             }else{
                 $participant->status = 2;
             }
             $participant->save();
-            return redirect('attachment/'.$id.'/validate');
+            return redirect('/');
+        }else {
+            return redirect('/');
         }
     }
 
@@ -209,6 +216,88 @@ class CompetitionController extends Controller
             foreach ($attachment as $attach) {
                 $attach->attachment_confirmed = true;
                 $attach->save();
+            }
+        }
+        return redirect('/');
+    }
+
+    public function revise(Request $request, $id){
+        if(Participant::find($id)){
+            $participant = Participant::find($id);
+            $attachment = Attachment::where('participant_id', $id);
+            $ktp = true;
+            $pdf = true;
+            $karya = true;
+            if($participant->ktp_confirmed == false){
+                $ktp = false;
+            }
+            if($participant->pdf_confirmed == false){
+                $pdf = false;
+            }
+            foreach ($attachment as $attach) {
+                if($attach->attachment_confirmed == false){
+                    $karya = false;
+                }
+            }
+
+            if($ktp == false){
+                if($pdf == false){
+                    if($karya == false){
+                        $this->validate($request,[
+                        'ktp' => 'required|image|max:10000',
+                        'surat' => 'required|file|mimes:pdf|max:10000',
+                        'hasil_karya.*' => 'required|image|max:10000']);
+                    }else{
+                        $this->validate($request,[
+                        'ktp' => 'required|image|max:10000',
+                        'surat' => 'required|file|mimes:pdf|max:10000']);
+                    }
+                }else{
+                    if($karya == false){
+                        $this->validate($request,[
+                        'ktp' => 'required|image|max:10000',
+                        'hasil_karya.*' => 'required|image|max:10000']);
+                    }else{
+                        $this->validate($request,[
+                        'ktp' => 'required|image|max:10000']);
+                    }
+                }
+            }else{
+                if($pdf == false){
+                    if($karya == false){
+                        $this->validate($request,[
+                        'surat' => 'required|file|mimes:pdf|max:10000',
+                        'hasil_karya.*' => 'required|image|max:10000']);
+                    }else{
+                        $this->validate($request,[
+                        'surat' => 'required|file|mimes:pdf|max:10000']);
+                    }
+                }else{
+                    if($karya == false){
+                        $this->validate($request,[
+                        'hasil_karya.*' => 'required|image|max:10000']);
+                    }
+                }
+            }
+
+            if($participant->ktp_confirmed == false){
+                $ktp = $request->file('ktp')->store('ktp');
+                $participant->ktp_picpath = $ktp;
+            }
+            if($participant->pdf_confirmed == false){
+                $pdf = $request->file('surat')->store('pdf');
+                $participant->pdf_picpath = $pdf;
+            }
+            $participant->status = 0;
+            $participant->save();
+
+            $hasil_karya = $request->file('hasil_karya');
+            $i = 1;
+            foreach ($attachment as $attach) {
+                if($attach->attachment_confirmed == false){
+                   $attach->attachment_path = $hasil_karya[$i]->store('hasil_karya'); 
+                   $attach->save();
+                }
             }
         }
         return redirect('/');
