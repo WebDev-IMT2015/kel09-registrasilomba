@@ -13,23 +13,15 @@ class CompetitionController extends Controller
     }
 
     public function saveCompetition(Request $request){
-    	if($request->input('name') != "" && $request->input('attachment_total') >= 3){
-	    	$competition = new Competition;
-	    	$competition->name = $request->input('name');
-	    	$competition->attachment_total = $request->input('attachment_total');
-	    	$competition->save();
-	    	return redirect('/');
-    	}else{
-    		if($request->input('name') == ""){
-    			if($request->input('attachment_total') < 3){
-    				return redirect('competition/add')->with('name', 'cannot be empty')->with('attachment_total', 'must be 3 or higher');
-    			}else{
-    				return redirect('competition/add')->with('name', 'cannot be empty');
-    			}
-    		}else if($request->input('attachment_total') < 3){
-    			return redirect('competition/add')->with('attachment_total', 'must be 3 or higher');
-    		}
-    	}
+        $this->validate($request,[
+            'name' => 'required', 
+            'attachment_total' => 'required|numeric|min:3|max:5']);
+    
+            $competition = new Competition;
+            $competition->name = $request->input('name');
+            $competition->attachment_total = $request->input('attachment_total');
+            $competition->save();
+            return redirect('/');
     }
 
 	public function manage($id){
