@@ -52,23 +52,31 @@ class CompetitionController extends Controller
         }
     }
 
-    public function join(Request $request){
-
-        return view('competition.join');
+    public function join(Request $request, $id){
+        if(Competition::find($id)){
+            return view('competition.join')->with('competition', Competition::find($id));
+        }else{
+            return redirect('/');
+        }
     }
 
-    public function upload(Request $request){
+    public function upload(Request $request, $id){
         $this->validate($request,[
         'ktp' => 'required|image',
-        'pdf' => 'required|file|mimes:application/pdf, application/x-pdf,application/acrobat, applications/vnd.pdf, text/pdf, text/x-pdf|max:10000',
+        'pdf' => 'required|file|mimes:pdf|max:10000',
         'hasil_karya.*' => 'required|image']);
 
-        $attachment = new Attachment;
-        $attachment->participants_id = $request->input('participants_id');
-        $attachment->attachment_no = $request->input('attachment_no');
-        $attachment->attachment_path = $request->input('attachment_path');
-        $attachment->attachment_no = $request->input('attachment_no');
+        // $participant = new Participant;
+        // $participant->user_id = Auth::user()->id;
+        // $participant->competition_id = $id;
+        // $participant->
+        // $attachment = new Attachment;
+        // $attachment->participants_id = $request->input('participants_id');
+        // $attachment->attachment_no = $request->input('attachment_no');
+        // $attachment->attachment_path = $request->input('attachment_path');
+        // $attachment->attachment_no = $request->input('attachment_no');
 
         return redirect('/');
+        // return $request;
     }
 }
