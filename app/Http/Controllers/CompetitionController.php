@@ -41,10 +41,22 @@ class CompetitionController extends Controller
     }
 
     public function join(Request $request){
+
+        return view('competition.join');
+    }
+
+    public function upload(Request $request){
         $this->validate($request,[
         'ktp' => 'required|image',
         'pdf' => 'required|file|mimes:application/pdf, application/x-pdf,application/acrobat, applications/vnd.pdf, text/pdf, text/x-pdf|max:10000',
         'hasil_karya.*' => 'required|image']);
-        return view('competition.join');
+
+        $attachment = new Attachment;
+        $attachment->participants_id = $request->input('participants_id');
+        $attachment->attachment_no = $request->input('attachment_no');
+        $attachment->attachment_path = $request->input('attachment_path');
+        $attachment->attachment_no = $request->input('attachment_no');
+
+        return redirect('/');
     }
 }

@@ -6,10 +6,7 @@ use Illuminate\Http\Request;
 
 class UploadController extends Controller
 {
-    public function uploadFiles()
-    {
-    	return view('UploadFiles');
-    }
+
     public function upload(Request $request)
     {
     	$attachment = $request->file('attachment');
@@ -18,5 +15,6 @@ class UploadController extends Controller
     		foreach ($attachment as $file) {
     			Storage::put()
     		}
+            return view('competition.join');
     }
 }

@@ -17,7 +17,7 @@
                          Upload File PDF:
                         <input type="file" name="file[]" multiple />
                          <br>
-                        Upload Hasil Karya:
+                         Upload Hasil Karya:
                         <input type="file" name="photos[]" multiple />
                         <br>
                         <input type="submit" value="Upload" />
