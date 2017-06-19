@@ -98,11 +98,7 @@
                     @endif
                 </div>
             </div>
-<<<<<<< HEAD
             @if(Auth::user()->role == "user" && isset($participate) && $participate->count() > 0)
-=======
-            @if(Auth::user()->role == "user" && isset($participate))
->>>>>>> refs/remotes/origin/master
                 <div class="panel panel-default">
                     <div class="panel-heading"> Competition Status </div>
                     <div class="panel-body">
