@@ -13,7 +13,7 @@ class CreateUserJoinEventTable extends Migration
      */
     public function up()
     {
-        Schema::create('userJoinCompetitions', function (Blueprint $table) {
+        Schema::create('participants', function (Blueprint $table) {
             $table->increments('id');
             $table->primary('user_id');
             $table->foreign('user_id')->references('id')->on('users');
@@ -35,6 +35,6 @@ class CreateUserJoinEventTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('userJoinCompetitions');
+        Schema::dropIfExists('participants');
     }
 }
