@@ -10,8 +10,13 @@ class UploadController extends Controller
     {
     	return view('UploadFiles');
     }
-    public function uploadSubmit(UploadRequest $request)
+    public function upload(Request $request)
     {
+    	$attachment = $request->file('attachment');
 
+    	if(!empty($attachment)):
+    		foreach ($attachment as $file) {
+    			Storage::put()
+    		}
     }
 }

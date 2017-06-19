@@ -61,6 +61,8 @@ Route::group(['middleware' => 'auth'], function(){
 
 	    	Route::get('{id}/join', 'CompetitionController@join');
 
+	    	Route::post('{id}/join', 'CompetitionController@join');
+
 	    });
 
 	});
