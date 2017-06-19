@@ -15,8 +15,10 @@ class CreateUserJoinEventTable extends Migration
     {
         Schema::create('participants', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id');
             $table->primary('user_id');
             $table->foreign('user_id')->references('id')->on('users');
+            $table->integer('competition_id');
             $table->primary('competition_id');
             $table->foreign('competition_id')->references('id')->on('competitions');
             $table->string('ktp_picpath');

@@ -15,8 +15,10 @@ class CreateUserJoinEventAttachmentTable extends Migration
     {
         Schema::create('attachments', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('participants_id');
             $table->primary('participants_id');
             $table->foreign('participants_id')->references('id')->on('participants');
+            $table->integer('attachment_no');
             $table->primary('attachment_no');
             $table->string('attachment_path');
             $table->boolean('attachment_confirmed')->default(false);
