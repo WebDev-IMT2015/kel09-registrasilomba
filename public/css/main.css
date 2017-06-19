@@ -1,8 +1,8 @@
 a {
-	color:black;
+	color:blue;
 }
 
 a:hover, a:focus {
-	color: darkgray;
+	color: #2196F3;
 	text-decoration: none;
 }

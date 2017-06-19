@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-md-10 col-md-offset-1">
 
             <div class="panel panel-default">
                 <div class="panel-heading"> List Registrant of {{ $competition->name }} </div>
@@ -19,22 +19,40 @@
                                     <th>Email</th>
                                     <th>Alamat</th>
                                     <th>Phone Number</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {{-- @foreach($users as $user)
-                                    <tr>
-                                        <td>{{ $user->id }}</td>
-                                        <td>{{ $user->name }}</td>
-                                        <td style="color:@if($user->confirmed == true) green @else red @endif">{{ $user->email }}</td>
-                                        <td>{{ $user->alamat }}</td>
-                                        <td>{{ $user->phone_number }}</td>
-                                    </tr>
-                                @endforeach --}}
+                                @foreach($participants as $participant)
+                                    @if($user = $users->find($participant->user_id))
+                                        <tr>
+                                            <td>{{ $user->id }}</td>
+                                            <td>{{ $user->name }}</td>
+                                            <td style="color:@if($user->confirmed == true) green @else red @endif">{{ $user->email }}</td>
+                                            <td>{{ $user->alamat }}</td>
+                                            <td>{{ $user->phone_number }}</td>
+                                            <td>
+                                                @if($participant->status == 0)
+                                                    <span style="color:black">Validating</span>
+                                                @elseif($participant->status == 1)
+                                                    <span style="color:red">Need Revision</span>
+                                                @elseif($participant->status == 2)
+                                                    <span style="color:green">Accepted</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <a href="{{ url('attachment/'.$participant->id.'/view') }}">
+                                                    <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> View Attachment
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    @endif
+                                @endforeach
                             </tbody>
                         </table>
                         <div class="text-center">
-                            {{-- {{ $users->render() }} --}}
+                            {{ $participants->render() }}
                         </div>
                     </div>
                 </div>
