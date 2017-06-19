@@ -49,16 +49,10 @@
 												<td>Hasil Karya {{ $attach->attachment_no }}</td>
 												<td>
 													<input id="hasil_karya[{{ $attach->attachment_no }}]" type="file" class="form-control" name="hasil_karya[{{ $attach->attachment_no }}]" required>
-
-<<<<<<< HEAD
+													
 				                                    @if ($errors->has('hasil_karya.'.$attach->attachment_no))
 				                                        <span class="help-block">
 				                                            <strong>{{ $errors->first('hasil_karya.'.$attach->attachment_no) }}</strong>
-=======
-				                                    @if ($errors->has('hasil_karya.'.$i))
-				                                        <span class="help-block">
-				                                            <strong>{{ $errors->first('hasil_karya.'.$i) }}</strong>
->>>>>>> refs/remotes/origin/master
 				                                        </span>
 				                                    @endif
 												</td>
