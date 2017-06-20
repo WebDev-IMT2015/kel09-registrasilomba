@@ -4,6 +4,8 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index');
 
+Route::get('verify/sendEmail', 'HomeController@sendEmailVerify')->name('sendEmailVerification');
+
 Route::group(['middleware' => 'auth'], function(){
 
 	Route::group(['prefix' => 'verify'], function(){
@@ -17,7 +19,6 @@ Route::group(['middleware' => 'auth'], function(){
 			'uses' => 'HomeController@verifyCode'
 		]);
 
-		Route::get('sendEmail', 'HomeController@sendEmailVerify')->name('sendEmailVerification');
 
 	});
 
