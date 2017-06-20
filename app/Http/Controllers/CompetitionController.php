@@ -82,8 +82,8 @@ class CompetitionController extends Controller
         $participant->competition_id = $id;
         $ktp = $request->file('ktp')->store('ktp');
         $pdf = $request->file('surat')->store('pdf');
-        $participant->ktp_picpath = $ktp;
-        $participant->pdf_picpath = $pdf;
+        $participant->ktp_picpath = str_replace('\\','/',$ktp);
+        $participant->pdf_picpath = str_replace('\\','/',$pdf);
         $participant->save();
 
         $hasil_karya = $request->file('hasil_karya');
@@ -91,7 +91,7 @@ class CompetitionController extends Controller
             $attachment = new Attachment;
             $attachment->participants_id = $participant->id;
             $attachment->attachment_no = $i;
-            $attachment->attachment_path = $hasil_karya[$i]->store('hasil_karya');
+            $attachment->attachment_path = str_replace('\\','/',$hasil_karya[$i]->store('hasil_karya'));
             $attachment->save();
         }
         return redirect('/');
@@ -129,14 +129,14 @@ class CompetitionController extends Controller
 
     public function viewKtp($id){
         $filename = Participant::find($id)->ktp_picpath;
-        $path = storage_path('app/'.str_replace('/','\\',Participant::find($id)->ktp_picpath));
+        $path = storage_path('app/'.Participant::find($id)->ktp_picpath);
 
         return Response::download($path);
     }
 
     public function viewPdf($id){
         $filename = Participant::find($id)->pdf_picpath;
-        $path = storage_path('app\\'.str_replace('/','\\',Participant::find($id)->pdf_picpath));
+        $path = storage_path('app/'.Participant::find($id)->pdf_picpath);
 
         return Response::download($path);
     }
@@ -145,7 +145,7 @@ class CompetitionController extends Controller
         $karya = Attachment::all();
         $karya = $karya->where('participants_id',$id)->where('attachment_no', $no)->first();
         $filename = $karya->attachment_path;
-        $path = storage_path('app\\'.str_replace('/','\\', $karya->attachment_path));
+        $path = storage_path('app/'.$karya->attachment_path);
 
         return Response::download($path);
     }
@@ -282,11 +282,11 @@ class CompetitionController extends Controller
 
             if($participant->ktp_confirmed == false){
                 $ktp = $request->file('ktp')->store('ktp');
-                $participant->ktp_picpath = $ktp;
+                $participant->ktp_picpath = str_replace('\\','/',$ktp);
             }
             if($participant->pdf_confirmed == false){
                 $pdf = $request->file('surat')->store('pdf');
-                $participant->pdf_picpath = $pdf;
+                $participant->pdf_picpath = str_replace('\\','/',$pdf);
             }
             $participant->status = 0;
             $participant->save();
@@ -295,7 +295,7 @@ class CompetitionController extends Controller
             $i = 1;
             foreach ($attachment as $attach) {
                 if($attach->attachment_confirmed == false){
-                   $attach->attachment_path = $hasil_karya[$i]->store('hasil_karya'); 
+                   $attach->attachment_path = str_replace('\\','/',$hasil_karya[$i]->store('hasil_karya')); 
                    $attach->save();
                 }
             }
