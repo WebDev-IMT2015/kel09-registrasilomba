@@ -129,7 +129,7 @@ class CompetitionController extends Controller
 
     public function viewKtp($id){
         $filename = Participant::find($id)->ktp_picpath;
-        $path = storage_path('app\\'.str_replace('/','\\',Participant::find($id)->ktp_picpath));
+        $path = storage_path('app/'.str_replace('/','\\',Participant::find($id)->ktp_picpath));
 
         return Response::download($path);
     }
